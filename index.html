@@ -1,0 +1,526 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Laws of Software Teams</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Twenty short episodes on the rules behind deadlines, teams, metrics and systems, by Ivan Rykov.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800;900&family=JetBrains+Mono:wght@600;700&display=swap">
+<style>
+/* Layout: a field-guide index. Each law is a phone-shaped poster next to its rule, grouped into four arcs. */
+:root {
+  color-scheme: dark;
+  --bg: #0E0D0B;
+  --surface: #161411;
+  --raised: #1E1B17;
+  --line: #2C2823;
+  --ink: #F4EFE6;
+  --muted: #A39C90;
+  --faint: #6F685D;
+  --accent: #FF8A1F;
+  --accent-ink: #120F0B;
+  --display: "Inter", "Helvetica Neue", Arial, sans-serif;
+  --body: "Inter", "Helvetica Neue", Arial, sans-serif;
+  --mono: "JetBrains Mono", "DejaVu Sans Mono", ui-monospace, Menlo, monospace;
+}
+* { box-sizing: border-box; }
+html { background: var(--bg); }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 400 16px/1.55 var(--body);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+.wrap {
+  max-width: 1120px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.kicker {
+  font: 700 12px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--accent);
+}
+/* hero */
+.hero { padding-block: clamp(48px, 9vw, 112px) clamp(32px, 6vw, 72px); position: relative; overflow: hidden; }
+.hero::before {
+  content: ""; position: absolute; width: 760px; height: 760px; right: -260px; top: -320px;
+  background: radial-gradient(closest-side, rgba(255,138,31,.16), rgba(255,138,31,0));
+  pointer-events: none;
+}
+.hero .wrap { position: relative; display: grid; gap: 28px; grid-template-columns: minmax(0, 1fr) 280px; align-items: end; }
+.hero .intro { display: grid; gap: 28px; min-width: 0; }
+.hero .arcs { grid-column: 1 / -1; }
+.reel { display: grid; gap: 10px; }
+.reel .media { border: 1px solid var(--line); }
+.reel figcaption { font: 600 12px/1.4 var(--mono); color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+@media (max-width: 860px) { .hero .wrap { grid-template-columns: minmax(0, 1fr); } .reel { max-width: 280px; } }
+.hero h1 {
+  font: 900 clamp(44px, 8.4vw, 104px)/.95 var(--display); letter-spacing: -.035em; margin: 0; text-wrap: balance; max-width: 11ch;
+}
+.hero h1 span { color: var(--accent); }
+.lede { font-size: clamp(17px, 2.1vw, 21px); color: var(--muted); max-width: 40ch; margin: 0; }
+.byline { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; font-size: 15px; color: var(--muted); }
+.byline strong { color: var(--ink); font-weight: 600; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 16px; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--surface); color: var(--ink); text-decoration: none;
+  font: 600 14px/1 var(--body); cursor: pointer;
+}
+.btn:hover { border-color: var(--faint); }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn:focus-visible, .poster:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+/* arc index */
+.arcs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; }
+.arc-link { display: grid; gap: 6px; padding: 18px 18px 20px; background: var(--surface); text-decoration: none; min-width: 0; }
+.arc-link:hover { background: var(--raised); }
+.arc-link b { font: 800 22px/1.1 var(--display); letter-spacing: -.01em; }
+.arc-link small { color: var(--muted); font-size: 14px; }
+.arc-link em { font: 600 12px/1.3 var(--mono); color: var(--faint); font-style: normal; }
+@media (max-width: 760px) { .arcs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+/* sections */
+section.arc { padding-block: clamp(40px, 6vw, 72px) 8px; border-top: 1px solid var(--line); }
+.arc-head { display: grid; gap: 8px; margin-bottom: 28px; }
+.arc-head h2 { font: 900 clamp(32px, 5vw, 56px)/1 var(--display); letter-spacing: -.03em; margin: 0; }
+.arc-head p { margin: 0; color: var(--muted); font-size: 18px; }
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+@media (max-width: 860px) { .grid { grid-template-columns: minmax(0, 1fr); } }
+/* episode */
+.ep {
+  display: grid; grid-template-columns: 168px minmax(0, 1fr); gap: 20px; padding: 16px; border-radius: 20px;
+  background: var(--surface); border: 1px solid var(--line); scroll-margin-top: 24px;
+}
+.ep.target { border-color: var(--accent); }
+.ep.playing { grid-template-columns: 300px minmax(0, 1fr); grid-column: 1 / -1; }
+.grid > .ep:first-child { grid-column: 1 / -1; grid-template-columns: 200px minmax(0, 1fr); }
+.grid > .ep:first-child h3 { font-size: 32px; }
+.grid > .ep:first-child.playing { grid-template-columns: 300px minmax(0, 1fr); }
+@media (max-width: 560px) { .ep, .ep.playing, .grid > .ep:first-child, .grid > .ep:first-child.playing { grid-template-columns: minmax(0, 1fr); } }
+.media { position: relative; aspect-ratio: 9 / 16; width: 100%; max-width: 100%; border-radius: 12px; overflow: hidden; background: #000; }
+@media (max-width: 560px) { .media { max-width: 320px; } }
+.poster { all: unset; position: absolute; inset: 0; cursor: pointer; display: block; }
+.poster img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.poster .play {
+  position: absolute; left: 50%; top: 50%; translate: -50% -50%; width: 56px; height: 56px; border-radius: 50%;
+  background: var(--accent); display: grid; place-items: center; box-shadow: 0 6px 24px rgba(0,0,0,.45);
+}
+.poster .play svg { width: 20px; height: 20px; margin-left: 3px; fill: var(--accent-ink); }
+.poster .dur {
+  position: absolute; right: 8px; bottom: 8px; padding: 3px 7px; border-radius: 6px; background: rgba(14,13,11,.82);
+  font: 600 11px/1 var(--mono); color: var(--ink); font-variant-numeric: tabular-nums;
+}
+.media video { width: 100%; height: 100%; display: block; background: #000; }
+.body { display: grid; align-content: start; gap: 12px; min-width: 0; }
+.ep-top { display: flex; align-items: baseline; gap: 12px; min-width: 0; }
+.ep-n { font: 700 12px/1 var(--mono); color: var(--faint); letter-spacing: .1em; font-variant-numeric: tabular-nums; }
+.skill { font: 600 12px/1.35 var(--mono); color: var(--muted); letter-spacing: .02em; min-width: 0; }
+.ep h3 { font: 800 26px/1.05 var(--display); letter-spacing: -.02em; margin: 0; text-wrap: balance; }
+.statement { margin: 0; color: var(--muted); font-size: 16px; }
+.take { margin: 0; font: 800 19px/1.25 var(--display); color: var(--accent); letter-spacing: -.01em; white-space: pre-line; }
+.mine { margin: 0; padding: 12px 14px; border-radius: 12px; background: var(--raised); font-size: 15px; }
+.mine b { display: block; font: 700 11px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.actions .btn { min-height: 36px; padding: 0 14px; font-size: 13px; }
+details { font-size: 14px; color: var(--muted); }
+summary { cursor: pointer; font-weight: 600; color: var(--ink); list-style: none; display: inline-flex; gap: 6px; align-items: center; }
+summary::-webkit-details-marker { display: none; }
+summary::before { content: "+"; font: 700 14px/1 var(--mono); color: var(--accent); }
+details[open] summary::before { content: "−"; }
+details ul { margin: 10px 0 0; padding-left: 18px; display: grid; gap: 6px; }
+details a { color: var(--ink); text-decoration-color: var(--faint); text-underline-offset: 3px; overflow-wrap: anywhere; }
+.toast {
+  position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); translate: -50% 0;
+  background: var(--ink); color: var(--accent-ink); padding: 10px 16px; border-radius: 999px; font: 600 14px/1 var(--body);
+  opacity: 0; transition: opacity .2s; pointer-events: none;
+}
+.toast.show { opacity: 1; }
+footer { border-top: 1px solid var(--line); margin-top: 56px; }
+footer .wrap { padding-block: 32px 48px; display: grid; gap: 10px; color: var(--muted); font-size: 14px; max-width: 1120px; }
+footer p { margin: 0; max-width: 75ch; }
+@media (max-width: 560px) { .ep, .ep.playing, .grid > .ep:first-child, .grid > .ep:first-child.playing { grid-template-columns: minmax(0, 1fr); } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+html { scroll-behavior: smooth; }
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <div class="intro">
+    <div class="kicker">A video series by Ivan Rykov</div>
+    <h1>The laws of <span>software teams</span></h1>
+    <p class="lede">Twenty short episodes on the rules behind deadlines, teams, metrics and systems, and what they mean for the way engineering teams are led.</p>
+    <div class="byline">
+      <strong>Ivan Rykov</strong><span>Head of Engineering</span><span>Tbilisi, Georgia</span>
+      <a class="btn" href="https://www.linkedin.com/in/rykovia/" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn primary" href="#ep-1">Start with episode 1</a>
+    </div>
+    </div>
+    <figure class="reel" style="margin:0">
+      <div class="media"><button class="poster" type="button" data-src="v-finale.mp4" data-poster="p-finale.jpg" aria-label="Play all 20 laws in 60 seconds">
+        <img src="p-finale.jpg" alt="" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:07</span></button></div>
+      <figcaption>All 20 laws in 60 seconds</figcaption>
+    </figure>
+    <nav class="arcs" aria-label="Arcs"><a class="arc-link" href="#time"><span class="kicker">Arc 1</span><b>Time</b><small>How I plan and commit</small><em>Parkinson · Hofstadter · The 90-90 rule · Zawinski · Brooks&#x27;</em></a><a class="arc-link" href="#teams"><span class="kicker">Arc 2</span><b>Teams</b><small>How I build and grow teams</small><em>The Ringelmann effect · Price · Conway · Dunbar&#x27;s number · The Peter principle</em></a><a class="arc-link" href="#decisions"><span class="kicker">Arc 3</span><b>Decisions</b><small>How I measure and decide</small><em>Gilb · Goodhart · Sturgeon · The of triviality · Cunningham</em></a><a class="arc-link" href="#systems"><span class="kicker">Arc 4</span><b>Systems</b><small>How I keep systems healthy</small><em>Gall · Hyrum · Kernighan · Chesterton&#x27;s fence · Murphy</em></a></nav>
+  </div>
+</header>
+<main class="wrap"><section class="arc" id="time"><div class="arc-head"><span class="kicker">Arc 1 · Time</span><h2>How I plan and commit</h2></div><div class="grid"><article class="ep" id="ep-1" aria-labelledby="t-1">
+  <div class="media"><button class="poster" type="button" data-src="v-parkinsons-law.mp4" data-poster="p-parkinsons-law.jpg" aria-label="Play Parkinson&#x27;s law">
+    <img src="p-parkinsons-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:14</span></button></div>
+  <div class="body">
+    <div class="ep-top"><span class="ep-n">01</span><span class="skill">Time boxes instead of open deadlines</span></div>
+    <h3 id="t-1">Parkinson&#x27;s law</h3>
+    <p class="statement">Work expands so as to fill the time available for its completion</p>
+    <p class="take">Give work a box,
+not a blank check</p>
+    <p class="mine"><b>How I apply it</b>In my teams, the date comes first, the scope is what we negotiate, and I never set fake deadlines. Large work goes in small slices, so we can ship, re-estimate and adjust early.</p>
+    <div class="actions">
+      <a class="btn" href="c-parkinsons-law.pdf" target="_blank" rel="noopener">Slides (PDF)</a>
+      <button class="btn" type="button" data-copy="ep-1">Copy link</button>
+    </div>
+    <details><summary>Sources</summary><ul><li><a href="http://doc.cat-v.org/economics/parkinsons-law/" target="_blank" rel="noopener">C. Northcote Parkinson, &quot;Parkinson&#x27;s Law&quot;, The Economist, 1955</a></li><li><a href="https://ecowin.org/pdf/documents/Parkinson%20full.pdf" target="_blank" rel="noopener">Parkinson&#x27;s Law and Other Studies in Administration</a></li><li><a href="https://en.wikipedia.org/wiki/Parkinson%27s_law" target="_blank" rel="noopener">Parkinson&#x27;s law, Wikipedia</a></li><li><a href="https://www.cin.ufpe.br/%7Egmp/docs/papers/critical_chain_concepts.pdf" target="_blank" rel="noopener">Critical Chain concepts</a></li><li><a href="https://link.springer.com/article/10.3758/BF03210823" target="_blank" rel="noopener">Brannon, Hershberger &amp; Brock (1999), &quot;Timeless demonstrations of Parkinson&#x27;s first law&quot;, Psychonomic Bulletin &amp; Review</a></li><li><a href="https://basecamp.com/shapeup/1.2-chapter-03" target="_blank" rel="noopener">Shape Up, Ryan Singer (Basecamp), appetite, fixed time, variable scope</a></li><li><a href="https://www.manager.dev/newsletter/the-13-software-engineering-laws" target="_blank" rel="noopener">The 13 software engineering laws, manager.dev</a></li></ul></details>
+  </div>
+</article><article class="ep" id="ep-2" aria-labelledby="t-2">
+  <div class="media"><button class="poster" type="button" data-src="v-hofstadters-law.mp4" data-poster="p-hofstadters-law.jpg" aria-label="Play Hofstadter&#x27;s law">
+    <img src="p-hofstadters-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:12</span></button></div>
+  <div class="body">
+    <div class="ep-top"><span class="ep-n">02</span><span class="skill">Honest estimates</span></div>
+    <h3 id="t-2">Hofstadter&#x27;s law</h3>
+    <p class="statement">It always takes longer than you expect, even when you take into account Hofstadter&#x27;s law</p>
+    <p class="take">Plan with your history,
+not your hopes</p>
+    
+    <div class="actions">
+      <a class="btn" href="c-hofstadters-law.pdf" target="_blank" rel="noopener">Slides (PDF)</a>
+      <button class="btn" type="button" data-copy="ep-2">Copy link</button>
+    </div>
+    <details><summary>Sources</summary><ul><li><a href="https://en.wikipedia.org/wiki/Hofstadter%27s_law" target="_blank" rel="noopener">Hofstadter&#x27;s law, Wikipedia</a></li><li><a href="https://en.wikipedia.org/wiki/Planning_fallacy" target="_blank" rel="noopener">Planning fallacy, Wikipedia</a></li><li><a href="https://en.wikipedia.org/wiki/Sydney_Opera_House" target="_blank" rel="noopener">Sydney Opera House, Wikipedia</a></li><li><a href="https://arxiv.org/abs/1304.0265" target="_blank" rel="noopener">Flyvbjerg &amp; Budzier, &quot;Why Your IT Project May Be Riskier Than You Think&quot;</a></li><li><a href="https://www.manager.dev/newsletter/the-13-software-engineering-laws" target="_blank" rel="noopener">The 13 software engineering laws, manager.dev</a></li></ul></details>
+  </div>
+</article><article class="ep" id="ep-3" aria-labelledby="t-3">
+  <div class="media"><button class="poster" type="button" data-src="v-ninety-ninety-rule.mp4" data-poster="p-ninety-ninety-rule.jpg" aria-label="Play The 90-90 rule">
+    <img src="p-ninety-ninety-rule.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:16</span></button></div>
+  <div class="body">
+    <div class="ep-top"><span class="ep-n">03</span><span class="skill">Finishing: a real definition of done</span></div>
+    <h3 id="t-3">The 90-90 rule</h3>
+    <p class="statement">The first 90% of the code takes the first 90% of the time. The last 10% takes the other 90%</p>
+    <p class="take">Done is
+not 90%</p>
+    
+    <div class="actions">
+      <a class="btn" href="c-ninety-ninety-rule.pdf" target="_blank" rel="noopener">Slides (PDF)</a>
+      <button class="btn" type="button" data-copy="ep-3">Copy link</button>
+    </div>
+    <details><summary>Sources</summary><ul><li><a href="https://en.wikipedia.org/wiki/Ninety%E2%80%93ninety_rule" target="_blank" rel="noopener">Ninety-ninety rule, Wikipedia</a></li><li><a href="https://www.catb.org/jargon/html/N/Ninety-Ninety-Rule.html" target="_blank" rel="noopener">The Jargon File, Ninety-Ninety Rule</a></li><li><a href="https://github.com/dwmkerr/hacker-laws#the-9090-rule" target="_blank" rel="noopener">hacker-laws, The 90-90 Rule</a></li><li><a href="https://archive.org/details/MythicalManMonth" target="_blank" rel="noopener">Fred Brooks, The Mythical Man-Month (1975; anniversary edition 1995), chapter 14 &quot;Hatching a Catastrophe&quot;: &quot;Coding … is &#x27;90 percent finished&#x27; for half of the total coding time. Debugging is &#x27;99 percent complete&#x27; most of the time&quot;; &quot;Milestones must be concrete, specific, measurable events, defined with knife-edge sharpness&quot;; the two studies of estimating behaviour by government contractors (&quot;Underestimates do not change significantly during the activity until about three weeks before the scheduled completion&quot;), footnote: King, W. R., and T. A. Wilson, &quot;Subjective time estimates in critical path planning, a preliminary analysis&quot;, Management Science 13, 5 (Jan. 1967), pp. 307-320</a></li></ul></details>
+  </div>
+</article><article class="ep" id="ep-4" aria-labelledby="t-4">
+  <div class="media"><button class="poster" type="button" data-src="v-zawinskis-law.mp4" data-poster="p-zawinskis-law.jpg" aria-label="Play Zawinski&#x27;s law">
+    <img src="p-zawinskis-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:12</span></button></div>
+  <div class="body">
+    <div class="ep-top"><span class="ep-n">04</span><span class="skill">Scope control and saying no</span></div>
+    <h3 id="t-4">Zawinski&#x27;s law</h3>
+    <p class="statement">Every program attempts to expand until it can read mail</p>
+    <p class="take">Every product wants to read mail
+Decide on purpose if yours should</p>
+    
+    <div class="actions">
+      <a class="btn" href="c-zawinskis-law.pdf" target="_blank" rel="noopener">Slides (PDF)</a>
+      <button class="btn" type="button" data-copy="ep-4">Copy link</button>
+    </div>
+    <details><summary>Sources</summary><ul><li><a href="https://www.jwz.org/hacks/" target="_blank" rel="noopener">Jamie Zawinski, jwz.org</a></li><li><a href="https://jargon.dr0.ch/Z/Zawinskis-Law.html" target="_blank" rel="noopener">Jargon File, &quot;Zawinski&#x27;s Law&quot;</a></li><li><a href="https://en.wikipedia.org/wiki/Jamie_Zawinski" target="_blank" rel="noopener">Jamie Zawinski, Wikipedia</a></li><li><a href="https://en.wikipedia.org/wiki/Netscape_Navigator" target="_blank" rel="noopener">Netscape Navigator, Wikipedia</a></li><li><a href="https://en.wikipedia.org/wiki/Netscape_Mail_%26_Newsgroups" target="_blank" rel="noopener">Netscape Mail &amp; Newsgroups, Wikipedia</a></li><li><a href="https://en.wikipedia.org/wiki/Netscape_Communicator" target="_blank" rel="noopener">Netscape Communicator, Wikipedia</a></li><li><a href="https://techcrunch.com/2025/04/15/notion-releases-its-ai-driven-email-inbox" target="_blank" rel="noopener">TechCrunch, &quot;Notion releases its AI-driven email inbox&quot;, 15 April 2025</a></li><li><a href="https://www.notion.com/en-gb/help/notion-mail-inbox-is-going-away-what-to-do-next" target="_blank" rel="noopener">Notion help centre, &quot;Notion Mail inbox is going away&quot;</a></li><li><a href="https://9to5mac.com/2026/06/25/notion-shutting-down-its-ai-powered-email-client-including-mac-and-ios-apps/" target="_blank" rel="noopener">9to5Mac, Notion shutting down its email client, 25 June 2026</a></li><li><a href="https://next.ink/brief-article/un-an-a-peine-apres-son-lancement-notion-annonce-deja-la-fin-de-son-client-mail/" target="_blank" rel="noopener">Next.ink</a></li><li><a href="https://basecamp.com/gettingreal/05.3-start-with-no" target="_blank" rel="noopener">Getting Real, 37signals, &quot;Start With No&quot;</a></li><li><a href="https://www.manager.dev/newsletter/the-13-software-engineering-laws" target="_blank" rel="noopener">The 13 software engineering laws, manager.dev</a></li></ul></details>
+  </div>
+</article><article class="ep" id="ep-5" aria-labelledby="t-5">
+  <div class="media"><button class="poster" type="button" data-src="v-brooks-law.mp4" data-poster="p-brooks-law.jpg" aria-label="Play Brooks&#x27; law">
+    <img src="p-brooks-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:06</span></button></div>
+  <div class="body">
+    <div class="ep-top"><span class="ep-n">05</span><span class="skill">Handling a late project</span></div>
+    <h3 id="t-5">Brooks&#x27; law</h3>
+    <p class="statement">Adding manpower to a late software project makes it later</p>
+    <p class="take">People and months
+don’t trade</p>
+    
+    <div class="actions">
+      <a class="btn" href="c-brooks-law.pdf" target="_blank" rel="noopener">Slides (PDF)</a>
+      <button class="btn" type="button" data-copy="ep-5">Copy link</button>
+    </div>
+    <details><summary>Sources</summary><ul><li><a href="https://en.wikipedia.org/wiki/Brooks%27s_law" target="_blank" rel="noopener">Brooks&#x27;s law, Wikipedia</a></li><li><a href="https://en.wikipedia.org/wiki/The_Mythical_Man-Month" target="_blank" rel="noopener">The Mythical Man-Month, Wikipedia</a></li><li><a href="https://www.fastcompany.com/3023543/why-good-programming-projects-go-bad" target="_blank" rel="noopener">Fast Company, Why good programming projects go bad</a></li><li><a href="https://en.wikipedia.org/wiki/Fred_Brooks" target="_blank" rel="noopener">Fred Brooks, Wikipedia</a></li><li><a href="https://www.manager.dev/newsletter/the-13-software-engineering-laws" target="_blank" rel="noopener">The 13 software engineering laws, manager.dev</a></li></ul></details>
+  </div>
+</article></div></section><section class="arc" id="teams"><div class="arc-head"><span class="kicker">Arc 2 · Teams</span><h2>How I build and grow teams</h2></div><div class="grid"><article class="ep" id="ep-6" aria-labelledby="t-6">
+  <div class="media"><button class="poster" type="button" data-src="v-ringelmann-effect.mp4" data-poster="p-ringelmann-effect.jpg" aria-label="Play The Ringelmann effect">
+    <img src="p-ringelmann-effect.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:10</span></button></div>
+  <div class="body">
+    <div class="ep-top"><span class="ep-n">06</span><span class="skill">Team size</span></div>
+    <h3 id="t-6">The Ringelmann effect</h3>
+    <p class="statement">Individual effort drops as a group gets bigger</p>
+    <p class="take">So what’s the right size?
+Small enough that nobody can hide</p>
+    
+    <div class="actions">
+      <a class="btn" href="c-ringelmann-effect.pdf" target="_blank" rel="noopener">Slides (PDF)</a>
+      <button class="btn" type="button" data-copy="ep-6">Copy link</button>
+    </div>
+    <details><summary>Sources</summary><ul><li><a href="https://en.wikipedia.org/wiki/Max_Ringelmann" target="_blank" rel="noopener">Max Ringelmann, Wikipedia</a></li><li><a href="https://en.wikipedia.org/wiki/Social_loafing" target="_blank" rel="noopener">Social loafing, Wikipedia</a></li><li><a href="https://en.wikipedia.org/wiki/The_Mythical_Man-Month" target="_blank" rel="noopener">Brooks (1975), The Mythical Man-Month, n(n−1)/2</a></li><li><a href="https://qsm.com/blog/2025/4-key-studies-team-size" target="_blank" rel="noopener">QSM, 4 key studies on team size</a></li><li><a href="https://www.manager.dev/newsletter/the-13-software-engineering-laws" target="_blank" rel="noopener">The 13 software engineering laws, manager.dev</a></li></ul></details>
+  </div>
+</article><article class="ep" id="ep-7" aria-labelledby="t-7">
+  <div class="media"><button class="poster" type="button" data-src="v-price-law.mp4" data-poster="p-price-law.jpg" aria-label="Play Price&#x27;s law">
+    <img src="p-price-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:07</span></button></div>
+  <div class="body">
+    <div class="ep-top"><span class="ep-n">07</span><span class="skill">Where output comes from, keeping strong people</span></div>
+    <h3 id="t-7">Price&#x27;s law</h3>
+    <p class="statement">Half of the work is done by the square root of the number of people</p>
+    <p class="take">So don’t count heads
+Find your √N
+Then clear their path</p>
+    
+    <div class="actions">
+      <a class="btn" href="c-price-law.pdf" target="_blank" rel="noopener">Slides (PDF)</a>
+      <button class="btn" type="button" data-copy="ep-7">Copy link</button>
+    </div>
+    <details><summary>Sources</summary><ul><li><a href="https://en.wikipedia.org/wiki/Price%27s_law" target="_blank" rel="noopener">Price&#x27;s law, Wikipedia</a></li><li><a href="https://www.manager.dev/newsletter/the-13-software-engineering-laws" target="_blank" rel="noopener">The 13 software engineering laws, manager.dev</a></li></ul></details>
+  </div>
+</article><article class="ep" id="ep-8" aria-labelledby="t-8">
+  <div class="media"><button class="poster" type="button" data-src="v-conways-law.mp4" data-poster="p-conways-law.jpg" aria-label="Play Conway&#x27;s law">
+    <img src="p-conways-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:12</span></button></div>
+  <div class="body">
+    <div class="ep-top"><span class="ep-n">08</span><span class="skill">Org design for the architecture</span></div>
+    <h3 id="t-8">Conway&#x27;s law</h3>
+    <p class="statement">Organizations design systems that copy their own communication structure</p>
+    <p class="take">Want a different architecture?
+Draw a different org chart</p>
+    
+    <div class="actions">
+      <a class="btn" href="c-conways-law.pdf" target="_blank" rel="noopener">Slides (PDF)</a>
+      <button class="btn" type="button" data-copy="ep-8">Copy link</button>
+    </div>
+    <details><summary>Sources</summary><ul><li><a href="https://www.melconway.com/Home/Committees_Paper.html" target="_blank" rel="noopener">Melvin Conway, &quot;How Do Committees Invent?&quot;, Datamation, April 1968</a></li><li><a href="https://en.wikipedia.org/wiki/Conway%27s_law" target="_blank" rel="noopener">Conway&#x27;s law, Wikipedia</a></li><li><a href="https://www.cs.umd.edu/users/basili/publications/proceedings/P125.pdf" target="_blank" rel="noopener">Nagappan, Murphy &amp; Basili, &quot;The Influence of Organizational Structure on Software Quality&quot;, ICSE 2008</a></li><li><a href="https://courses.cs.washington.edu/courses/cse452/22wi/papers/yegge-platform-rant.html" target="_blank" rel="noopener">Steve Yegge&#x27;s platforms memo</a></li><li><a href="https://www.manager.dev/newsletter/being-an-engineering-manager-at-flo" target="_blank" rel="noopener">Being an engineering manager at Flo, manager.dev</a></li><li><a href="https://www.manager.dev/newsletter/the-13-software-engineering-laws" target="_blank" rel="noopener">The 13 software engineering laws, manager.dev</a></li></ul></details>
+  </div>
+</article><article class="ep" id="ep-9" aria-labelledby="t-9">
+  <div class="media"><button class="poster" type="button" data-src="v-dunbars-number.mp4" data-poster="p-dunbars-number.jpg" aria-label="Play Dunbar&#x27;s number">
+    <img src="p-dunbars-number.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:18</span></button></div>
+  <div class="body">
+    <div class="ep-top"><span class="ep-n">09</span><span class="skill">Scaling: when to split a team</span></div>
+    <h3 id="t-9">Dunbar&#x27;s number</h3>
+    <p class="statement">People can keep about 150 stable relationships</p>
+    <p class="take">Grow in layers,
+not in one big room</p>
+    
+    <div class="actions">
+      <a class="btn" href="c-dunbars-number.pdf" target="_blank" rel="noopener">Slides (PDF)</a>
+      <button class="btn" type="button" data-copy="ep-9">Copy link</button>
+    </div>
+    <details><summary>Sources</summary><ul><li><a href="https://en.wikipedia.org/wiki/Dunbar%27s_number" target="_blank" rel="noopener">Dunbar&#x27;s number, Wikipedia</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8103230" target="_blank" rel="noopener">Lindenfors, Wartel &amp; Lind, &quot;&#x27;Dunbar&#x27;s number&#x27; deconstructed&quot;, Biology Letters 17(5), 2021</a></li><li><a href="https://researchoutreach.org/articles/size-matters-social-groups-human-evolution/" target="_blank" rel="noopener">Robin Dunbar interview, Research Outreach</a></li><li><a href="https://arxiv.org/abs/1604.02400" target="_blank" rel="noopener">MacCarron, Kaski &amp; Dunbar, &quot;Calling Dunbar&#x27;s numbers&quot;, Social Networks, 2016</a></li><li><a href="https://arxiv.org/abs/cond-mat/0403299" target="_blank" rel="noopener">Zhou, Sornette, Hill &amp; Dunbar, &quot;Discrete hierarchical organization of social group sizes&quot;, Proc. R. Soc. B, 2005</a></li><li><a href="https://holub.com/goodies/SpotifyScaling.pdf" target="_blank" rel="noopener">Kniberg &amp; Ivarsson, &quot;Scaling Agile @ Spotify&quot;, October 2012</a></li><li><a href="https://www.encyclopedia.com/books/politics-and-business-magazines/w-l-gore-associates-inc" target="_blank" rel="noopener">W. L. Gore &amp; Associates, company history</a></li><li><a href="https://github.com/dwmkerr/hacker-laws#dunbars-number" target="_blank" rel="noopener">hacker-laws, Dunbar&#x27;s Number</a></li></ul></details>
+  </div>
+</article><article class="ep" id="ep-10" aria-labelledby="t-10">
+  <div class="media"><button class="poster" type="button" data-src="v-peter-principle.mp4" data-poster="p-peter-principle.jpg" aria-label="Play The Peter principle">
+    <img src="p-peter-principle.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:11</span></button></div>
+  <div class="body">
+    <div class="ep-top"><span class="ep-n">10</span><span class="skill">Promotions and career tracks</span></div>
+    <h3 id="t-10">The Peter principle</h3>
+    <p class="statement">In a hierarchy, every employee tends to rise to his level of incompetence</p>
+    <p class="take">Promote for the next job
+Not for the last one</p>
+    
+    <div class="actions">
+      <a class="btn" href="c-peter-principle.pdf" target="_blank" rel="noopener">Slides (PDF)</a>
+      <button class="btn" type="button" data-copy="ep-10">Copy link</button>
+    </div>
+    <details><summary>Sources</summary><ul><li><a href="https://en.wikipedia.org/wiki/Peter_principle" target="_blank" rel="noopener">The Peter principle, Wikipedia</a></li><li><a href="https://www.nber.org/papers/w24343" target="_blank" rel="noopener">Benson, Li &amp; Shue, &quot;Promotions and the Peter Principle&quot;, NBER Working Paper 24343 (2018), published in The Quarterly Journal of Economics 134(4), 2019</a></li><li><a href="https://www.weforum.org/stories/leadership/he-peter-principle-isnt-just-real-its-costly/" target="_blank" rel="noopener">World Economic Forum / NBER Digest, &quot;This data shows why you should think carefully about who you promote&quot;, 2018</a></li><li><a href="https://charity.wtf/2017/05/11/the-engineer-manager-pendulum/" target="_blank" rel="noopener">Charity Majors, &quot;The Engineer/Manager Pendulum&quot;, 11 May 2017</a></li><li><a href="https://github.com/dwmkerr/hacker-laws#the-peter-principle" target="_blank" rel="noopener">hacker-laws, The Peter Principle</a></li></ul></details>
+  </div>
+</article></div></section><section class="arc" id="decisions"><div class="arc-head"><span class="kicker">Arc 3 · Decisions</span><h2>How I measure and decide</h2></div><div class="grid"><article class="ep" id="ep-11" aria-labelledby="t-11">
+  <div class="media"><button class="poster" type="button" data-src="v-gilb-law.mp4" data-poster="p-gilb-law.jpg" aria-label="Play Gilb&#x27;s law">
+    <img src="p-gilb-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:09</span></button></div>
+  <div class="body">
+    <div class="ep-top"><span class="ep-n">11</span><span class="skill">Measuring what matters, even roughly</span></div>
+    <h3 id="t-11">Gilb&#x27;s law</h3>
+    <p class="statement">Anything you need to quantify can be measured in some way that is superior to not measuring it at all</p>
+    <p class="take">A rough number
+beats a confident guess</p>
+    
+    <div class="actions">
+      <a class="btn" href="c-gilb-law.pdf" target="_blank" rel="noopener">Slides (PDF)</a>
+      <button class="btn" type="button" data-copy="ep-11">Copy link</button>
+    </div>
+    <details><summary>Sources</summary><ul><li><a href="https://en.wikipedia.org/wiki/Eratosthenes" target="_blank" rel="noopener">Eratosthenes, Wikipedia</a></li><li><a href="https://kidneybone.com/c2/wiki/GilbMeasurabilityPrinciple" target="_blank" rel="noopener">Gilb&#x27;s law wording and Peopleware attribution</a></li><li><a href="https://vanderburg.org/blog/2003/02/03/gilbs-trap.html" target="_blank" rel="noopener">Gilb&#x27;s Trap, Glenn Vanderburg</a></li><li><a href="https://rww.quarto.pub/dadm-faq/posts/rule-of-five/index.html" target="_blank" rel="noopener">Hubbard&#x27;s Rule of Five</a></li><li><a href="https://www.ybrikman.com/blog/2015/01/20/how-to-measure-anything/" target="_blank" rel="noopener">How to Measure Anything, review by Yevgeniy Brikman</a></li><li><a href="https://www.manager.dev/newsletter/the-13-software-engineering-laws" target="_blank" rel="noopener">The 13 software engineering laws, manager.dev</a></li></ul></details>
+  </div>
+</article><article class="ep" id="ep-12" aria-labelledby="t-12">
+  <div class="media"><button class="poster" type="button" data-src="v-goodhart-law.mp4" data-poster="p-goodhart-law.jpg" aria-label="Play Goodhart&#x27;s law">
+    <img src="p-goodhart-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:04</span></button></div>
+  <div class="body">
+    <div class="ep-top"><span class="ep-n">12</span><span class="skill">Metrics that get gamed</span></div>
+    <h3 id="t-12">Goodhart&#x27;s law</h3>
+    <p class="statement">When a measure becomes a target, it ceases to be a good measure</p>
+    <p class="take">Measure to learn,
+not to judge</p>
+    
+    <div class="actions">
+      <a class="btn" href="c-goodhart-law.pdf" target="_blank" rel="noopener">Slides (PDF)</a>
+      <button class="btn" type="button" data-copy="ep-12">Copy link</button>
+    </div>
+    <details><summary>Sources</summary><ul><li><a href="https://en.wikipedia.org/wiki/Goodhart%27s_law" target="_blank" rel="noopener">Goodhart&#x27;s law, Wikipedia</a></li><li><a href="https://www.folklore.org/Negative_2000_Lines_Of_Code.html" target="_blank" rel="noopener">&quot;−2000 Lines Of Code&quot;, Andy Hertzfeld, folklore.org</a></li><li><a href="https://en.wikipedia.org/wiki/Great_Hanoi_Rat_Massacre" target="_blank" rel="noopener">Great Hanoi Rat Massacre, Wikipedia</a></li><li><a href="https://www.fox4news.com/news/wells-fargo-says-3-5-million-accounts-involved-in-scandal" target="_blank" rel="noopener">Wells Fargo says 3.5 million accounts involved</a></li><li><a href="https://whyy.org/articles/wells-fargo-to-pay-3b-to-resolve-probes-into-fake-accounts" target="_blank" rel="noopener">Wells Fargo to pay $3B to resolve probes</a></li><li><a href="https://dora.dev/guides/dora-metrics-four-keys" target="_blank" rel="noopener">DORA&#x27;s software delivery metrics</a></li><li><a href="https://www.manager.dev/newsletter/the-13-software-engineering-laws" target="_blank" rel="noopener">The 13 software engineering laws, manager.dev</a></li></ul></details>
+  </div>
+</article><article class="ep" id="ep-13" aria-labelledby="t-13">
+  <div class="media"><button class="poster" type="button" data-src="v-sturgeons-law.mp4" data-poster="p-sturgeons-law.jpg" aria-label="Play Sturgeon&#x27;s law">
+    <img src="p-sturgeons-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:04</span></button></div>
+  <div class="body">
+    <div class="ep-top"><span class="ep-n">13</span><span class="skill">Focus on the ten percent that matters</span></div>
+    <h3 id="t-13">Sturgeon&#x27;s law</h3>
+    <p class="statement">Ninety percent of everything is crud</p>
+    <p class="take">Find the 10%
+Say no to the rest</p>
+    
+    <div class="actions">
+      <a class="btn" href="c-sturgeons-law.pdf" target="_blank" rel="noopener">Slides (PDF)</a>
+      <button class="btn" type="button" data-copy="ep-13">Copy link</button>
+    </div>
+    <details><summary>Sources</summary><ul><li><a href="https://en.wikipedia.org/wiki/Sturgeon%27s_law" target="_blank" rel="noopener">Sturgeon&#x27;s law, Wikipedia</a></li><li><a href="https://www.pendo.io/resources/the-2019-feature-adoption-report/" target="_blank" rel="noopener">Pendo, The 2019 Feature Adoption Report</a></li><li><a href="https://www.pendo.io/pendo-blog/pendo-data-suggests-29-5-billion-global-cloud-rd-investment-squandered-software-features-go-unused/" target="_blank" rel="noopener">Pendo press release</a></li><li><a href="https://ai.stanford.edu/~ronnyk/ExPThinkWeek2009Public.pdf" target="_blank" rel="noopener">Kohavi, Crook &amp; Longbotham, &quot;Online Experimentation at Microsoft&quot;, 2009</a></li><li><a href="https://exp-platform.com/experiments-at-microsoft/" target="_blank" rel="noopener">Experiments at Microsoft, ExP platform</a></li><li><a href="https://www.manager.dev/newsletter/the-13-software-engineering-laws" target="_blank" rel="noopener">The 13 software engineering laws, manager.dev</a></li></ul></details>
+  </div>
+</article><article class="ep" id="ep-14" aria-labelledby="t-14">
+  <div class="media"><button class="poster" type="button" data-src="v-law-of-triviality.mp4" data-poster="p-law-of-triviality.jpg" aria-label="Play The law of triviality">
+    <img src="p-law-of-triviality.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:12</span></button></div>
+  <div class="body">
+    <div class="ep-top"><span class="ep-n">14</span><span class="skill">Meeting time for the decisions that matter</span></div>
+    <h3 id="t-14">The law of triviality</h3>
+    <p class="statement">The time spent on any item of the agenda will be in inverse proportion to the sum involved</p>
+    <p class="take">Spend attention on the risk
+Not on how easy the topic is</p>
+    
+    <div class="actions">
+      <a class="btn" href="c-law-of-triviality.pdf" target="_blank" rel="noopener">Slides (PDF)</a>
+      <button class="btn" type="button" data-copy="ep-14">Copy link</button>
+    </div>
+    <details><summary>Sources</summary><ul><li><a href="https://ecowin.org/pdf/documents/Parkinson%20full.pdf" target="_blank" rel="noopener">C. Northcote Parkinson, &quot;Parkinson&#x27;s Law and Other Studies in Administration&quot;, Houghton Mifflin, 1957, ch. 3 &quot;High Finance, or the Point of Vanishing Interest&quot;</a></li><li><a href="https://en.wikipedia.org/wiki/Law_of_triviality" target="_blank" rel="noopener">Law of triviality, Wikipedia</a></li><li><a href="https://producingoss.com/fr/bikeshed-full.html" target="_blank" rel="noopener">Poul-Henning Kamp, &quot;A bike shed (any colour will do) on greener grass…&quot;, 2 October 1999</a></li><li><a href="https://docs.freebsd.org/en/books/faq/#bikeshed-painting" target="_blank" rel="noopener">FreeBSD FAQ, &quot;Why should I care what color the bikeshed is?&quot;</a></li><li><a href="https://github.com/dwmkerr/hacker-laws#the-law-of-triviality" target="_blank" rel="noopener">hacker-laws, The Law of Triviality</a></li></ul></details>
+  </div>
+</article><article class="ep" id="ep-15" aria-labelledby="t-15">
+  <div class="media"><button class="poster" type="button" data-src="v-cunninghams-law.mp4" data-poster="p-cunninghams-law.jpg" aria-label="Play Cunningham&#x27;s law">
+    <img src="p-cunninghams-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:04</span></button></div>
+  <div class="body">
+    <div class="ep-top"><span class="ep-n">15</span><span class="skill">Moving forward with drafts</span></div>
+    <h3 id="t-15">Cunningham&#x27;s law</h3>
+    <p class="statement">The best way to get the right answer on the internet is not to ask a question; it&#x27;s to post the wrong answer</p>
+    <p class="take">A rough draft gets better answers
+than a perfect question</p>
+    
+    <div class="actions">
+      <a class="btn" href="c-cunninghams-law.pdf" target="_blank" rel="noopener">Slides (PDF)</a>
+      <button class="btn" type="button" data-copy="ep-15">Copy link</button>
+    </div>
+    <details><summary>Sources</summary><ul><li><a href="https://en.wikipedia.org/wiki/Ward_Cunningham" target="_blank" rel="noopener">Ward Cunningham, Wikipedia</a></li><li><a href="https://todayifoundout.com/index.php/2014/09/cunningham-cunninghams-law/" target="_blank" rel="noopener">Today I Found Out, Cunningham&#x27;s law origin</a></li><li><a href="https://bewitched.com/historyflow.html" target="_blank" rel="noopener">Viégas, Wattenberg &amp; Dave, history flow</a></li><li><a href="https://www.manager.dev/newsletter/6-secrets-for-never-being-blocked" target="_blank" rel="noopener">6 secrets for never being blocked again, manager.dev</a></li><li><a href="https://www.manager.dev/newsletter/the-13-software-engineering-laws" target="_blank" rel="noopener">The 13 software engineering laws, manager.dev</a></li></ul></details>
+  </div>
+</article></div></section><section class="arc" id="systems"><div class="arc-head"><span class="kicker">Arc 4 · Systems</span><h2>How I keep systems healthy</h2></div><div class="grid"><article class="ep" id="ep-16" aria-labelledby="t-16">
+  <div class="media"><button class="poster" type="button" data-src="v-galls-law.mp4" data-poster="p-galls-law.jpg" aria-label="Play Gall&#x27;s law">
+    <img src="p-galls-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:12</span></button></div>
+  <div class="body">
+    <div class="ep-top"><span class="ep-n">16</span><span class="skill">Start simple and grow</span></div>
+    <h3 id="t-16">Gall&#x27;s law</h3>
+    <p class="statement">A complex system that works is invariably found to have evolved from a simple system that worked</p>
+    <p class="take">Grow systems
+Do not design them whole</p>
+    
+    <div class="actions">
+      <a class="btn" href="c-galls-law.pdf" target="_blank" rel="noopener">Slides (PDF)</a>
+      <button class="btn" type="button" data-copy="ep-16">Copy link</button>
+    </div>
+    <details><summary>Sources</summary><ul><li><a href="https://en.wikipedia.org/wiki/John_Gall_(author" target="_blank" rel="noopener">John Gall (author), Wikipedia</a></li><li><a href="https://en.wikipedia.org/wiki/Gall%27s_law" target="_blank" rel="noopener">Gall&#x27;s law, Wikipedia</a></li><li><a href="https://en.wikipedia.org/wiki/History_of_Linux" target="_blank" rel="noopener">History of Linux, Wikipedia</a></li><li><a href="https://www.joelonsoftware.com/2000/04/06/things-you-should-never-do-part-i/" target="_blank" rel="noopener">Joel Spolsky, &quot;Things You Should Never Do, Part I&quot;, 6 April 2000</a></li><li><a href="https://martinfowler.com/bliki/StranglerFigApplication.html" target="_blank" rel="noopener">Martin Fowler, &quot;Strangler Fig Application&quot;</a></li><li><a href="https://github.com/dwmkerr/hacker-laws#galls-law" target="_blank" rel="noopener">hacker-laws, Gall&#x27;s Law</a></li></ul></details>
+  </div>
+</article><article class="ep" id="ep-17" aria-labelledby="t-17">
+  <div class="media"><button class="poster" type="button" data-src="v-hyrums-law.mp4" data-poster="p-hyrums-law.jpg" aria-label="Play Hyrum&#x27;s law">
+    <img src="p-hyrums-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:12</span></button></div>
+  <div class="body">
+    <div class="ep-top"><span class="ep-n">17</span><span class="skill">API contracts and the cost of change</span></div>
+    <h3 id="t-17">Hyrum&#x27;s law</h3>
+    <p class="statement">With a sufficient number of users of an API, it does not matter what you promise in the contract: all observable behaviors of your system will be depended on by somebody</p>
+    <p class="take">Your real API is what people use,
+not what you wrote down</p>
+    
+    <div class="actions">
+      <a class="btn" href="c-hyrums-law.pdf" target="_blank" rel="noopener">Slides (PDF)</a>
+      <button class="btn" type="button" data-copy="ep-17">Copy link</button>
+    </div>
+    <details><summary>Sources</summary><ul><li><a href="https://www.hyrumslaw.com/" target="_blank" rel="noopener">Hyrum&#x27;s Law, hyrumslaw.com</a></li><li><a href="https://abseil.io/resources/swe-book/html/ch01.html" target="_blank" rel="noopener">Winters, Manshreck &amp; Wright, &quot;Software Engineering at Google&quot; (O&#x27;Reilly, 2020), ch. 1</a></li><li><a href="https://go.dev/doc/go1" target="_blank" rel="noopener">Go 1 release notes, March 2012, &quot;Iterating in maps&quot;</a></li><li><a href="https://xkcd.com/1172/" target="_blank" rel="noopener">xkcd 1172 &quot;Workflow&quot; by Randall Munroe</a></li><li><a href="https://github.com/dwmkerr/hacker-laws#hyrums-law-the-law-of-implicit-interfaces" target="_blank" rel="noopener">hacker-laws, Hyrum&#x27;s Law</a></li><li><a href="https://www.manager.dev/newsletter/the-13-software-engineering-laws" target="_blank" rel="noopener">The 13 software engineering laws, manager.dev</a></li></ul></details>
+  </div>
+</article><article class="ep" id="ep-18" aria-labelledby="t-18">
+  <div class="media"><button class="poster" type="button" data-src="v-kernighans-law.mp4" data-poster="p-kernighans-law.jpg" aria-label="Play Kernighan&#x27;s law">
+    <img src="p-kernighans-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:10</span></button></div>
+  <div class="body">
+    <div class="ep-top"><span class="ep-n">18</span><span class="skill">Simple code over clever code</span></div>
+    <h3 id="t-18">Kernighan&#x27;s law</h3>
+    <p class="statement">Debugging is twice as hard as writing the code</p>
+    <p class="take">Write for the person
+who debugs it</p>
+    
+    <div class="actions">
+      <a class="btn" href="c-kernighans-law.pdf" target="_blank" rel="noopener">Slides (PDF)</a>
+      <button class="btn" type="button" data-copy="ep-18">Copy link</button>
+    </div>
+    <details><summary>Sources</summary><ul><li><a href="https://en.wikipedia.org/wiki/The_Elements_of_Programming_Style" target="_blank" rel="noopener">Brian W. Kernighan &amp; P. J. Plauger, &quot;The Elements of Programming Style&quot;, 2nd edition, 1978, chapter 2</a></li><li><a href="https://github.com/dwmkerr/hacker-laws#kernighans-law" target="_blank" rel="noopener">hacker-laws, Kernighan&#x27;s Law</a></li><li><a href="https://yduf.github.io/kernighan-lever" target="_blank" rel="noopener">Kernighan&#x27;s lever</a></li><li><a href="https://xin-xia.github.io/publication/TSE17.pdf" target="_blank" rel="noopener">Xia, Bao, Lo, Xing, Hassan &amp; Li, &quot;Measuring Program Comprehension: A Large-Scale Field Study with Professionals&quot;, IEEE TSE 44(10), 2018</a></li></ul></details>
+  </div>
+</article><article class="ep" id="ep-19" aria-labelledby="t-19">
+  <div class="media"><button class="poster" type="button" data-src="v-chestertons-fence.mp4" data-poster="p-chestertons-fence.jpg" aria-label="Play Chesterton&#x27;s fence">
+    <img src="p-chestertons-fence.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:11</span></button></div>
+  <div class="body">
+    <div class="ep-top"><span class="ep-n">19</span><span class="skill">Understand before you remove</span></div>
+    <h3 id="t-19">Chesterton&#x27;s fence</h3>
+    <p class="statement">Do not remove a fence until you know why it was put up</p>
+    <p class="take">Every fence has a story
+Find it before you remove it</p>
+    
+    <div class="actions">
+      <a class="btn" href="c-chestertons-fence.pdf" target="_blank" rel="noopener">Slides (PDF)</a>
+      <button class="btn" type="button" data-copy="ep-19">Copy link</button>
+    </div>
+    <details><summary>Sources</summary><ul><li><a href="https://gist.github.com/austintaylor/90c9b867ca949d7ffb748549a76422bb" target="_blank" rel="noopener">G. K. Chesterton, &quot;The Thing&quot; (1929), &quot;The Drift from Domesticity&quot;, the fence passage, quoted verbatim on screen</a></li><li><a href="https://www.sec.gov/litigation/admin/2013/34-70694.pdf" target="_blank" rel="noopener">U.S. SEC, Release No. 34-70694, In the Matter of Knight Capital Americas LLC, October 2013</a></li><li><a href="https://github.com/dwmkerr/hacker-laws#chestertons-fence" target="_blank" rel="noopener">hacker-laws, Chesterton&#x27;s Fence</a></li><li><a href="https://en.wikipedia.org/wiki/G._K._Chesterton" target="_blank" rel="noopener">G. K. Chesterton, Wikipedia</a></li></ul></details>
+  </div>
+</article><article class="ep" id="ep-20" aria-labelledby="t-20">
+  <div class="media"><button class="poster" type="button" data-src="v-murphys-law.mp4" data-poster="p-murphys-law.jpg" aria-label="Play Murphy&#x27;s law">
+    <img src="p-murphys-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:12</span></button></div>
+  <div class="body">
+    <div class="ep-top"><span class="ep-n">20</span><span class="skill">Planning for failure</span></div>
+    <h3 id="t-20">Murphy&#x27;s law</h3>
+    <p class="statement">Anything that can go wrong will go wrong</p>
+    <p class="take">Murphy isn’t a curse
+It’s a checklist</p>
+    
+    <div class="actions">
+      <a class="btn" href="c-murphys-law.pdf" target="_blank" rel="noopener">Slides (PDF)</a>
+      <button class="btn" type="button" data-copy="ep-20">Copy link</button>
+    </div>
+    <details><summary>Sources</summary><ul><li><a href="https://about.gitlab.com/blog/gitlab-dot-com-database-incident" target="_blank" rel="noopener">GitLab.com database incident</a></li><li><a href="https://en.wikipedia.org/wiki/Murphy%27s_law" target="_blank" rel="noopener">Murphy&#x27;s law, Wikipedia</a></li><li><a href="https://en.wikipedia.org/wiki/Ariane_flight_V88" target="_blank" rel="noopener">Ariane flight V88, Wikipedia</a></li><li><a href="https://www.sec.gov/litigation/admin/2013/34-70694.pdf" target="_blank" rel="noopener">SEC order on Knight Capital, 2013</a></li><li><a href="https://en.wikipedia.org/wiki/Knight_Capital_Group" target="_blank" rel="noopener">Knight Capital Group, Wikipedia</a></li><li><a href="https://en.wikipedia.org/wiki/Chaos_engineering" target="_blank" rel="noopener">Chaos engineering, Wikipedia</a></li><li><a href="https://www.manager.dev/newsletter/the-13-software-engineering-laws" target="_blank" rel="noopener">The 13 software engineering laws, manager.dev</a></li></ul></details>
+  </div>
+</article></div></section></main>
+<footer><div class="wrap">
+  <p>The list follows Anton Zaides's 13 software engineering laws at manager.dev, with seven more from the hacker-laws collection. Facts and figures are checked against the sources listed under each episode. Charts marked as illustrations are not data.</p>
+  <p>The narration in the videos is an AI voice. The text and the views are my own.</p>
+</div></footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+(function () {
+  var toast = document.getElementById("toast"), t;
+  function say(msg) { toast.textContent = msg; toast.classList.add("show"); clearTimeout(t); t = setTimeout(function () { toast.classList.remove("show"); }, 1800); }
+  document.querySelectorAll(".poster").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var card = b.closest(".ep") || b.closest(".reel"), box = b.parentNode;
+      document.querySelectorAll(".ep.playing video").forEach(function (v) { v.pause(); });
+      var v = document.createElement("video");
+      v.src = b.dataset.src; v.poster = b.dataset.poster; v.controls = true; v.playsInline = true; v.preload = "auto";
+      v.setAttribute("playsinline", "");
+      box.replaceChildren(v); card.classList.add("playing");
+      var p = v.play(); if (p && p.catch) p.catch(function () {});
+    });
+  });
+  document.querySelectorAll("[data-copy]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var url = location.href.split("#")[0] + "#" + b.dataset.copy;
+      function fallback() { var i = document.createElement("input"); i.value = url; document.body.appendChild(i); i.select(); try { document.execCommand("copy"); say("Link copied"); } catch (e) { say(url); } i.remove(); }
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(function () { say("Link copied"); }, fallback); else fallback();
+    });
+  });
+  function focusHash() {
+    var id = location.hash.slice(1); if (!id) return;
+    var el = document.getElementById(id); if (!el) return;
+    document.querySelectorAll(".ep.target").forEach(function (x) { x.classList.remove("target"); });
+    if (el.classList.contains("ep")) el.classList.add("target");
+  }
+  window.addEventListener("hashchange", focusHash); focusHash();
+})();
+</script>
+</body>
+</html>
