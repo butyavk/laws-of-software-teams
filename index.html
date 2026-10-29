@@ -119,6 +119,10 @@ section.arc { padding-block: clamp(40px, 6vw, 72px) 8px; border-top: 1px solid v
 .statement { margin: 0; color: var(--muted); font-size: 16px; }
 .take { margin: 0; font: 800 19px/1.25 var(--display); color: var(--accent); letter-spacing: -.01em; white-space: pre-line; }
 .mine { margin: 0; padding: 12px 14px; border-radius: 12px; background: var(--raised); font-size: 15px; }
+.mine p { margin: 0 0 6px; }
+.mine p:last-child { margin-bottom: 0; }
+.mine ol { margin: 4px 0 8px; padding-left: 20px; }
+.mine li { margin: 2px 0; }
 .mine b { display: block; font: 700 11px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
 .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
 .actions .btn { min-height: 36px; padding: 0 14px; font-size: 13px; }
@@ -166,14 +170,14 @@ html { scroll-behavior: smooth; }
 </header>
 <main class="wrap"><section class="arc" id="time"><div class="arc-head"><span class="kicker">Arc 1 · Time</span><h2>How I plan and commit</h2></div><div class="grid"><article class="ep" id="ep-1" aria-labelledby="t-1">
   <div class="media"><button class="poster" type="button" data-src="v-parkinsons-law.mp4" data-poster="p-parkinsons-law.jpg" aria-label="Play Parkinson&#x27;s law">
-    <img src="p-parkinsons-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:17</span></button></div>
+    <img src="p-parkinsons-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:24</span></button></div>
   <div class="body">
     <div class="ep-top"><span class="ep-n">01</span><span class="skill">Time boxes instead of open deadlines</span></div>
     <h3 id="t-1">Parkinson&#x27;s law</h3>
     <p class="statement">Work expands so as to fill the time available for its completion</p>
     <p class="take">Give work a box,
 not a blank check</p>
-    <p class="mine"><b>How I apply it</b>In my teams, the date comes first, the scope is what we negotiate, and I never set fake deadlines. Large work goes in small slices, so we can ship, re-estimate and adjust early.</p>
+    <div class="mine"><b>How I apply it</b><p>In my teams, the date comes first, and the scope is what we negotiate. I never set fake deadlines, because they burn teams out. Large work goes in small slices, so we can ship, re-estimate and adjust early.</p></div>
     <div class="actions">
       <a class="btn" href="c-parkinsons-law.pdf" target="_blank" rel="noopener">Slides (PDF)</a>
       <button class="btn" type="button" data-copy="ep-1">Copy link</button>
@@ -182,7 +186,7 @@ not a blank check</p>
   </div>
 </article><article class="ep" id="ep-2" aria-labelledby="t-2">
   <div class="media"><button class="poster" type="button" data-src="v-hofstadters-law.mp4" data-poster="p-hofstadters-law.jpg" aria-label="Play Hofstadter&#x27;s law">
-    <img src="p-hofstadters-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:12</span></button></div>
+    <img src="p-hofstadters-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:24</span></button></div>
   <div class="body">
     <div class="ep-top"><span class="ep-n">02</span><span class="skill">Honest estimates</span></div>
     <h3 id="t-2">Hofstadter&#x27;s law</h3>
@@ -198,7 +202,7 @@ not your hopes</p>
   </div>
 </article><article class="ep" id="ep-3" aria-labelledby="t-3">
   <div class="media"><button class="poster" type="button" data-src="v-ninety-ninety-rule.mp4" data-poster="p-ninety-ninety-rule.jpg" aria-label="Play The 90-90 rule">
-    <img src="p-ninety-ninety-rule.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:16</span></button></div>
+    <img src="p-ninety-ninety-rule.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:24</span></button></div>
   <div class="body">
     <div class="ep-top"><span class="ep-n">03</span><span class="skill">Finishing: a real definition of done</span></div>
     <h3 id="t-3">The 90-90 rule</h3>
@@ -214,7 +218,7 @@ not 90%</p>
   </div>
 </article><article class="ep" id="ep-4" aria-labelledby="t-4">
   <div class="media"><button class="poster" type="button" data-src="v-zawinskis-law.mp4" data-poster="p-zawinskis-law.jpg" aria-label="Play Zawinski&#x27;s law">
-    <img src="p-zawinskis-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:12</span></button></div>
+    <img src="p-zawinskis-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:21</span></button></div>
   <div class="body">
     <div class="ep-top"><span class="ep-n">04</span><span class="skill">Scope control and saying no</span></div>
     <h3 id="t-4">Zawinski&#x27;s law</h3>
@@ -230,7 +234,7 @@ Decide on purpose if yours should</p>
   </div>
 </article><article class="ep" id="ep-5" aria-labelledby="t-5">
   <div class="media"><button class="poster" type="button" data-src="v-brooks-law.mp4" data-poster="p-brooks-law.jpg" aria-label="Play Brooks&#x27; law">
-    <img src="p-brooks-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:06</span></button></div>
+    <img src="p-brooks-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:14</span></button></div>
   <div class="body">
     <div class="ep-top"><span class="ep-n">05</span><span class="skill">Handling a late project</span></div>
     <h3 id="t-5">Brooks&#x27; law</h3>
@@ -246,7 +250,7 @@ don’t trade</p>
   </div>
 </article></div></section><section class="arc" id="teams"><div class="arc-head"><span class="kicker">Arc 2 · Teams</span><h2>How I build and grow teams</h2></div><div class="grid"><article class="ep" id="ep-6" aria-labelledby="t-6">
   <div class="media"><button class="poster" type="button" data-src="v-ringelmann-effect.mp4" data-poster="p-ringelmann-effect.jpg" aria-label="Play The Ringelmann effect">
-    <img src="p-ringelmann-effect.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:10</span></button></div>
+    <img src="p-ringelmann-effect.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:18</span></button></div>
   <div class="body">
     <div class="ep-top"><span class="ep-n">06</span><span class="skill">Team size</span></div>
     <h3 id="t-6">The Ringelmann effect</h3>
@@ -262,7 +266,7 @@ Small enough that nobody can hide</p>
   </div>
 </article><article class="ep" id="ep-7" aria-labelledby="t-7">
   <div class="media"><button class="poster" type="button" data-src="v-price-law.mp4" data-poster="p-price-law.jpg" aria-label="Play Price&#x27;s law">
-    <img src="p-price-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:07</span></button></div>
+    <img src="p-price-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:16</span></button></div>
   <div class="body">
     <div class="ep-top"><span class="ep-n">07</span><span class="skill">Where output comes from, keeping strong people</span></div>
     <h3 id="t-7">Price&#x27;s law</h3>
@@ -279,7 +283,7 @@ Then clear their path</p>
   </div>
 </article><article class="ep" id="ep-8" aria-labelledby="t-8">
   <div class="media"><button class="poster" type="button" data-src="v-conways-law.mp4" data-poster="p-conways-law.jpg" aria-label="Play Conway&#x27;s law">
-    <img src="p-conways-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:12</span></button></div>
+    <img src="p-conways-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:17</span></button></div>
   <div class="body">
     <div class="ep-top"><span class="ep-n">08</span><span class="skill">Org design for the architecture</span></div>
     <h3 id="t-8">Conway&#x27;s law</h3>
@@ -295,7 +299,7 @@ Draw a different org chart</p>
   </div>
 </article><article class="ep" id="ep-9" aria-labelledby="t-9">
   <div class="media"><button class="poster" type="button" data-src="v-dunbars-number.mp4" data-poster="p-dunbars-number.jpg" aria-label="Play Dunbar&#x27;s number">
-    <img src="p-dunbars-number.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:18</span></button></div>
+    <img src="p-dunbars-number.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:26</span></button></div>
   <div class="body">
     <div class="ep-top"><span class="ep-n">09</span><span class="skill">Scaling: when to split a team</span></div>
     <h3 id="t-9">Dunbar&#x27;s number</h3>
@@ -311,7 +315,7 @@ not in one big room</p>
   </div>
 </article><article class="ep" id="ep-10" aria-labelledby="t-10">
   <div class="media"><button class="poster" type="button" data-src="v-peter-principle.mp4" data-poster="p-peter-principle.jpg" aria-label="Play The Peter principle">
-    <img src="p-peter-principle.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:11</span></button></div>
+    <img src="p-peter-principle.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:16</span></button></div>
   <div class="body">
     <div class="ep-top"><span class="ep-n">10</span><span class="skill">Promotions and career tracks</span></div>
     <h3 id="t-10">The Peter principle</h3>
@@ -327,7 +331,7 @@ Not for the last one</p>
   </div>
 </article></div></section><section class="arc" id="decisions"><div class="arc-head"><span class="kicker">Arc 3 · Decisions</span><h2>How I measure and decide</h2></div><div class="grid"><article class="ep" id="ep-11" aria-labelledby="t-11">
   <div class="media"><button class="poster" type="button" data-src="v-gilb-law.mp4" data-poster="p-gilb-law.jpg" aria-label="Play Gilb&#x27;s law">
-    <img src="p-gilb-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:09</span></button></div>
+    <img src="p-gilb-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:19</span></button></div>
   <div class="body">
     <div class="ep-top"><span class="ep-n">11</span><span class="skill">Measuring what matters, even roughly</span></div>
     <h3 id="t-11">Gilb&#x27;s law</h3>
@@ -343,7 +347,7 @@ beats a confident guess</p>
   </div>
 </article><article class="ep" id="ep-12" aria-labelledby="t-12">
   <div class="media"><button class="poster" type="button" data-src="v-goodhart-law.mp4" data-poster="p-goodhart-law.jpg" aria-label="Play Goodhart&#x27;s law">
-    <img src="p-goodhart-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:04</span></button></div>
+    <img src="p-goodhart-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:18</span></button></div>
   <div class="body">
     <div class="ep-top"><span class="ep-n">12</span><span class="skill">Metrics that get gamed</span></div>
     <h3 id="t-12">Goodhart&#x27;s law</h3>
@@ -359,7 +363,7 @@ not to judge</p>
   </div>
 </article><article class="ep" id="ep-13" aria-labelledby="t-13">
   <div class="media"><button class="poster" type="button" data-src="v-sturgeons-law.mp4" data-poster="p-sturgeons-law.jpg" aria-label="Play Sturgeon&#x27;s law">
-    <img src="p-sturgeons-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:04</span></button></div>
+    <img src="p-sturgeons-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:12</span></button></div>
   <div class="body">
     <div class="ep-top"><span class="ep-n">13</span><span class="skill">Focus on the ten percent that matters</span></div>
     <h3 id="t-13">Sturgeon&#x27;s law</h3>
@@ -375,7 +379,7 @@ Say no to the rest</p>
   </div>
 </article><article class="ep" id="ep-14" aria-labelledby="t-14">
   <div class="media"><button class="poster" type="button" data-src="v-law-of-triviality.mp4" data-poster="p-law-of-triviality.jpg" aria-label="Play The law of triviality">
-    <img src="p-law-of-triviality.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:12</span></button></div>
+    <img src="p-law-of-triviality.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:17</span></button></div>
   <div class="body">
     <div class="ep-top"><span class="ep-n">14</span><span class="skill">Meeting time for the decisions that matter</span></div>
     <h3 id="t-14">The law of triviality</h3>
@@ -391,7 +395,7 @@ Not on how easy the topic is</p>
   </div>
 </article><article class="ep" id="ep-15" aria-labelledby="t-15">
   <div class="media"><button class="poster" type="button" data-src="v-cunninghams-law.mp4" data-poster="p-cunninghams-law.jpg" aria-label="Play Cunningham&#x27;s law">
-    <img src="p-cunninghams-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:04</span></button></div>
+    <img src="p-cunninghams-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:14</span></button></div>
   <div class="body">
     <div class="ep-top"><span class="ep-n">15</span><span class="skill">Moving forward with drafts</span></div>
     <h3 id="t-15">Cunningham&#x27;s law</h3>
@@ -407,7 +411,7 @@ than a perfect question</p>
   </div>
 </article></div></section><section class="arc" id="systems"><div class="arc-head"><span class="kicker">Arc 4 · Systems</span><h2>How I keep systems healthy</h2></div><div class="grid"><article class="ep" id="ep-16" aria-labelledby="t-16">
   <div class="media"><button class="poster" type="button" data-src="v-galls-law.mp4" data-poster="p-galls-law.jpg" aria-label="Play Gall&#x27;s law">
-    <img src="p-galls-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:12</span></button></div>
+    <img src="p-galls-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:18</span></button></div>
   <div class="body">
     <div class="ep-top"><span class="ep-n">16</span><span class="skill">Start simple and grow</span></div>
     <h3 id="t-16">Gall&#x27;s law</h3>
@@ -423,7 +427,7 @@ Do not design them whole</p>
   </div>
 </article><article class="ep" id="ep-17" aria-labelledby="t-17">
   <div class="media"><button class="poster" type="button" data-src="v-hyrums-law.mp4" data-poster="p-hyrums-law.jpg" aria-label="Play Hyrum&#x27;s law">
-    <img src="p-hyrums-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:12</span></button></div>
+    <img src="p-hyrums-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:19</span></button></div>
   <div class="body">
     <div class="ep-top"><span class="ep-n">17</span><span class="skill">API contracts and the cost of change</span></div>
     <h3 id="t-17">Hyrum&#x27;s law</h3>
@@ -439,7 +443,7 @@ not what you wrote down</p>
   </div>
 </article><article class="ep" id="ep-18" aria-labelledby="t-18">
   <div class="media"><button class="poster" type="button" data-src="v-kernighans-law.mp4" data-poster="p-kernighans-law.jpg" aria-label="Play Kernighan&#x27;s law">
-    <img src="p-kernighans-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:10</span></button></div>
+    <img src="p-kernighans-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:18</span></button></div>
   <div class="body">
     <div class="ep-top"><span class="ep-n">18</span><span class="skill">Simple code over clever code</span></div>
     <h3 id="t-18">Kernighan&#x27;s law</h3>
@@ -455,7 +459,7 @@ who debugs it</p>
   </div>
 </article><article class="ep" id="ep-19" aria-labelledby="t-19">
   <div class="media"><button class="poster" type="button" data-src="v-chestertons-fence.mp4" data-poster="p-chestertons-fence.jpg" aria-label="Play Chesterton&#x27;s fence">
-    <img src="p-chestertons-fence.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:11</span></button></div>
+    <img src="p-chestertons-fence.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:16</span></button></div>
   <div class="body">
     <div class="ep-top"><span class="ep-n">19</span><span class="skill">Understand before you remove</span></div>
     <h3 id="t-19">Chesterton&#x27;s fence</h3>
@@ -471,7 +475,7 @@ Find it before you remove it</p>
   </div>
 </article><article class="ep" id="ep-20" aria-labelledby="t-20">
   <div class="media"><button class="poster" type="button" data-src="v-murphys-law.mp4" data-poster="p-murphys-law.jpg" aria-label="Play Murphy&#x27;s law">
-    <img src="p-murphys-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:12</span></button></div>
+    <img src="p-murphys-law.jpg" alt="" loading="lazy" width="720" height="1280"><span class="play"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5v15l13-7.5z"/></svg></span><span class="dur">1:20</span></button></div>
   <div class="body">
     <div class="ep-top"><span class="ep-n">20</span><span class="skill">Planning for failure</span></div>
     <h3 id="t-20">Murphy&#x27;s law</h3>
