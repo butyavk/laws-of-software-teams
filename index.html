@@ -84,17 +84,15 @@ section.arc { padding-block: clamp(40px, 6vw, 72px) 8px; border-top: 1px solid v
 .arc-head { display: grid; gap: 8px; margin-bottom: 28px; }
 .arc-head h2 { font: 900 clamp(32px, 5vw, 56px)/1 var(--display); letter-spacing: -.03em; margin: 0; }
 .arc-head p { margin: 0; color: var(--muted); font-size: 18px; }
-.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
 @media (max-width: 860px) { .grid { grid-template-columns: minmax(0, 1fr); } }
 /* episode */
 .ep {
-  display: grid; grid-template-columns: 168px minmax(0, 1fr); gap: 20px; padding: 16px; border-radius: 20px;
+  display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 24px; padding: 16px; border-radius: 20px;
   background: var(--surface); border: 1px solid var(--line); scroll-margin-top: 24px;
 }
 .ep.target { border-color: var(--accent); }
 .ep.playing { grid-template-columns: 300px minmax(0, 1fr); grid-column: 1 / -1; }
-.grid > .ep:first-child { grid-column: 1 / -1; grid-template-columns: 200px minmax(0, 1fr); }
-.grid > .ep:first-child h3 { font-size: 32px; }
 .grid > .ep:first-child.playing { grid-template-columns: 300px minmax(0, 1fr); }
 @media (max-width: 560px) { .ep, .ep.playing, .grid > .ep:first-child, .grid > .ep:first-child.playing { grid-template-columns: minmax(0, 1fr); } }
 .media { position: relative; aspect-ratio: 9 / 16; width: 100%; max-width: 100%; border-radius: 12px; overflow: hidden; background: #000; }
@@ -115,7 +113,7 @@ section.arc { padding-block: clamp(40px, 6vw, 72px) 8px; border-top: 1px solid v
 .ep-top { display: flex; align-items: baseline; gap: 12px; min-width: 0; }
 .ep-n { font: 700 12px/1 var(--mono); color: var(--faint); letter-spacing: .1em; font-variant-numeric: tabular-nums; }
 .skill { font: 600 12px/1.35 var(--mono); color: var(--muted); letter-spacing: .02em; min-width: 0; }
-.ep h3 { font: 800 26px/1.05 var(--display); letter-spacing: -.02em; margin: 0; text-wrap: balance; }
+.ep h3 { font: 800 30px/1.05 var(--display); letter-spacing: -.02em; margin: 0; text-wrap: balance; }
 .statement { margin: 0; color: var(--muted); font-size: 16px; }
 .take { margin: 0; font: 800 19px/1.25 var(--display); color: var(--accent); letter-spacing: -.01em; white-space: pre-line; }
 .mine { margin: 0; padding: 12px 14px; border-radius: 12px; background: var(--raised); font-size: 15px; }
